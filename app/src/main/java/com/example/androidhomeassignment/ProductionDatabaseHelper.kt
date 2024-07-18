@@ -21,24 +21,26 @@ abstract class ProductionDatabaseHelper (var context: Context):SQLiteOpenHelper(
                 col_Name + " VARCHAR(50)," +
                 col_price + "INTEGER"
         db?.execSQL(createTable)
-    }}
-fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
-    //Veritabanini yukseltmek icin kullanilir
-}
-fun insertData(production: Production)
-{
-    val db = this.writableDatabase
-    val cv = ContentValues()
-    cv.put(col_Name,production.productionName)
-    cv.put(col_price,production.price)
+    }
 
-    var insert = db.insert(table_Name,null,cv)
-    if (insert == (-1).toLong())
+    override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
+        //Veritabanini yukseltmek icin kullanilir
+    }
+    fun insertData(production: Production)
     {
-        Toast.makeText(context,"Error",Toast.LENGTH_LONG).show()
-    }else
-    {
-        Toast.makeText(context,"Success",Toast.LENGTH_LONG).show()
+        val db = this.writableDatabase
+        val cv = ContentValues()
+        cv.put(col_Name,production.productionName)
+        cv.put(col_price,production.price)
+
+        var insert = db.insert(table_Name,null,cv)
+        if (insert == (-1).toLong())
+        {
+            Toast.makeText(context,"Error",Toast.LENGTH_LONG).show()
+        }else
+        {
+            Toast.makeText(context,"Success",Toast.LENGTH_LONG).show()
+        }
     }
     @SuppressLint("Range")
     fun readData(): MutableList<Production> {
@@ -49,8 +51,8 @@ fun insertData(production: Production)
         if (result.moveToFirst())
         {
             do {
-                var Production = Production()
-                Production.productionName = result.getString(result.getColumnIndex(col_Name))
+                var production = Production()
+                production.productionName = result.getString(result.getColumnIndex(col_Name))
                 production.price = result.getString(result.getColumnIndex(col_price)).toInt()
                 list.add(production)
             }while (result.moveToNext())
@@ -66,3 +68,4 @@ fun insertData(production: Production)
         db.delete(table_Name, col_id + "=?", whereArgs)
     }
 }
+

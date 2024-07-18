@@ -13,4 +13,8 @@ class MainActivity3 : AppCompatActivity() {
         setContentView(R.layout.activity_main3)
 
     }
+
+    fun UpdateData() {
+
+    }
 }

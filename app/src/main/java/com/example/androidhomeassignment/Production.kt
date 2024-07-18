@@ -5,9 +5,13 @@ class Production {
     var productionName: String = "";
     var price: Int = 0;
 
-    constructor(_productionName:String,_price: Int) {
-        productionName = _productionName
-        price = _price
+    constructor(_productionName:String,_price:Int)
+    {
+        productionName = _productionName;
+        price = _price;
+    }
+
+    constructor() {
 
     }
 }
