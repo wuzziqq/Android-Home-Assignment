@@ -1,6 +1,7 @@
 package com.example.androidhomeassignment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -37,6 +38,11 @@ class MainActivity2 : AppCompatActivity() {
             {
                 Toast.makeText(applicationContext,"Fill the empty context",Toast.LENGTH_LONG).show()
             }
+        }
+
+        binding.btnBack.setOnClickListener {
+            val mainPage = Intent(applicationContext,MainActivity::class.java)
+            startActivity(mainPage)
         }
 
         binding.btnDel.setOnClickListener {

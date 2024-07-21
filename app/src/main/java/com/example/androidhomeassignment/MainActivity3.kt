@@ -1,6 +1,7 @@
 package com.example.androidhomeassignment
 
 import android.R.string.no
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -32,6 +33,12 @@ class MainActivity3 : AppCompatActivity() {
             items += (data.get(i).customerName.toString())
 
         }
+
+        binding.btnBack.setOnClickListener {
+            val mainPage = Intent(applicationContext,MainActivity::class.java)
+            startActivity(mainPage)
+        }
+
 
         val linearLayout: LinearLayout = findViewById(R.id.linearLayout)
 

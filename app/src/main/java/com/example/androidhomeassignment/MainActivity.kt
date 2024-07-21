@@ -1,10 +1,16 @@
 package com.example.androidhomeassignment
 
+import android.Manifest
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Binder
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.androidhomeassignment.databinding.ActivityMainBinding
@@ -26,6 +32,16 @@ class MainActivity : AppCompatActivity() {
         binding.buttonProduct.setOnClickListener {
             var productPage = Intent(applicationContext,MainActivity3::class.java)
             startActivity(productPage)
+        }
+
+        binding.buttonExport.setOnClickListener {
+            if (ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),1)
+            } else {
+                val db = DataBaseHelper(this)
+                db.exportData(this,"customer ${System.currentTimeMillis()}")
+            }
+
         }
     }
 }

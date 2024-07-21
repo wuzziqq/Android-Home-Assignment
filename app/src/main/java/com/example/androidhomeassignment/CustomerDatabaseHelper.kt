@@ -3,9 +3,16 @@ package com.example.androidhomeassignment
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.os.Build
+import android.os.Environment
+import android.provider.MediaStore
 import android.widget.Toast
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 val database_Name = "Customer Database"
 val table_Name = "Customer"
@@ -84,6 +91,54 @@ class DataBaseHelper (var context: Context):SQLiteOpenHelper(context,
         cv.put(col_name,name)
         val whereArgs = arrayOf(name)
         db.update(table_Name,cv,"$col_name=?",whereArgs)
+    }
+
+    fun exportData(context: Context,filename:String) {
+        val db = writableDatabase
+        val cursor : Cursor = db.rawQuery("SELECT * FROM $table_name",null)
+        try {
+            val externalStorage = Environment.getExternalStorageDirectory()
+            val formattedFileName = if(!filename.endsWith(".csv") && !filename.endsWith(".db")) {
+                "$filename.csv"
+            } else {
+                filename
+            }
+
+            val exportDirection = File(externalStorage,"exampleApp/exports")
+            if (!exportDirection.exists()) {
+                exportDirection.mkdirs()
+            }
+
+            val  file = File(exportDirection,formattedFileName)
+            val outputStream = FileOutputStream(file)
+
+            while (cursor.moveToNext()) {
+                val data = "${cursor.getString(0)}, ${cursor.getString(1)} , ${cursor.getString(2)}, ${cursor.getString(3)}\n"
+                outputStream.write(data.toByteArray())
+            }
+            outputStream.close()
+            cursor.close()
+
+            val fileSize = file.length()
+            if (fileSize>0) {
+                Toast.makeText(context, "data successufully exported", Toast.LENGTH_SHORT).show()
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                val contentValues = ContentValues().apply {
+                    put(MediaStore.MediaColumns.DISPLAY_NAME,formattedFileName)
+                    put(MediaStore.MediaColumns.MIME_TYPE,"appliation/x-sqlite3")
+                    put(MediaStore.MediaColumns.RELATIVE_PATH,"Documents/exampleApp/exports")
+                }
+                context.contentResolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI,contentValues)
+            }
+            else {
+                Toast.makeText(context, "Error exporting data", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+            println("Error")
+        }
     }
 
 }
