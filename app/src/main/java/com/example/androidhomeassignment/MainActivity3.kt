@@ -31,6 +31,7 @@ class MainActivity3 : AppCompatActivity() {
             if (data.size <= 0) return
             items += (data.get(i).customerName.toString())
 
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         }
 
         val linearLayout: LinearLayout = findViewById(R.id.linearLayout)
@@ -86,4 +87,5 @@ class MainActivity3 : AppCompatActivity() {
 
         }
     }
+
 }
