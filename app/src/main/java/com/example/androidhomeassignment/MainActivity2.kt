@@ -21,8 +21,6 @@ class MainActivity2 : AppCompatActivity() {
         var customer_Page = binding.root
         setContentView(customer_Page)
 
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-
         var context = this;
         var db = DataBaseHelper(context)
         binding.btnSave.setOnClickListener {
@@ -59,5 +57,4 @@ class MainActivity2 : AppCompatActivity() {
                     +data.get(i).customerName + " " + data.get(i).country + " " + data.get(i).total + "\n")
         }
     }
-
 }

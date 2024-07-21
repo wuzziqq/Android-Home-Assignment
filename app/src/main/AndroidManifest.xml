@@ -17,12 +17,10 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity2"
-            android:exported="false"
-            android:parentActivityName=".MainActivity"/>
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"
-            android:parentActivityName=".MainActivity">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
