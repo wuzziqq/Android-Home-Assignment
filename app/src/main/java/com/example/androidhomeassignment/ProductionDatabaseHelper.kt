@@ -12,8 +12,8 @@ val table_name = "Production"
 val col_Name = "name"
 val col_price = "price"
 
-abstract class ProductionDatabaseHelper (var context: Context):SQLiteOpenHelper(context,
-    database_name,null,1)
+class ProductionDatabaseHelper (var context: Context):SQLiteOpenHelper(context,
+    database_name,null,2)
 {
     override fun onCreate(db: SQLiteDatabase?) {
         // Veritabani olusturdugunda birkez calisir
@@ -61,6 +61,7 @@ abstract class ProductionDatabaseHelper (var context: Context):SQLiteOpenHelper(
         db.close()
         return list
     }
+
 
     fun deleteData(id: Int) {
         val db = this.writableDatabase

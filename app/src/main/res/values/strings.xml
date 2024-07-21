@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Android Home Assignment</string>
+    <string name="item_label">Clients</string>
 </resources>

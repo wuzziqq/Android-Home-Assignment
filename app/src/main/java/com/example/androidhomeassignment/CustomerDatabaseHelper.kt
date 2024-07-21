@@ -76,4 +76,14 @@ class DataBaseHelper (var context: Context):SQLiteOpenHelper(context,
         val whereArgs = arrayOf("$id")
         db.delete(table_Name, col_id + "=?", whereArgs)
     }
+
+    fun updateTotal(total:Int,name:String) {
+        val db = this.writableDatabase
+        val cv = ContentValues()
+        cv.put(col_total,total)
+        cv.put(col_name,name)
+        val whereArgs = arrayOf(name)
+        db.update(table_Name,cv,"$col_name=?",whereArgs)
+    }
+
 }

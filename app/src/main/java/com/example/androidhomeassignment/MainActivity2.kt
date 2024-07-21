@@ -26,10 +26,9 @@ class MainActivity2 : AppCompatActivity() {
         binding.btnSave.setOnClickListener {
             var etName = binding.customerName.text.toString()
             var etCountry = binding.customerCountry.text.toString()
-            var etTotal = 0
             if (etName.isNotEmpty() && etCountry.isNotEmpty())
             {
-                var customer = Customer(etName,etCountry,etTotal)
+                var customer = Customer(etName,etCountry,0)
                 db.insertData(customer)
                 UpdateData(db)
                 binding.customerName.text.clear()
